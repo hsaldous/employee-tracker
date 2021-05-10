@@ -1,13 +1,11 @@
 const path = require("path");
 const fs = require("fs");
-const db = require("./db");
 const tools = require("./tools");
 const cTable = require('console.table');
+const db = require("./db");
+
 
 module.exports = function(app) {
-  
-  // API routes
-  // GET requests
 
   app.get("/all-employees", function(req, res) {
     tools.viewAllEmployees();
@@ -20,8 +18,6 @@ module.exports = function(app) {
   app.get("/all-roles", function(req, res) {
     tools.viewAllRoles();
   });
-
-// API post requests
 
   app.get("*", function(req, res) {
     db.connection.query("SELECT 1", function(err, result) {
@@ -38,8 +34,6 @@ module.exports = function(app) {
   });
 
 };
-
-// Functions
 
 function viewAllEmployees() {
   db.connection.query("SELECT * FROM employee", function(err, res) {

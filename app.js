@@ -6,7 +6,7 @@ const db = require("./private/db");
 
 // Express
 var app = express();
-var PORT = process.env.PORT || 3500;
+var PORT = process.env.PORT || 3306;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));

@@ -1,5 +1,6 @@
-const db = require("./db");
 const inquirer = require("inquirer");
+const db = require("./db");
+
 
 function viewAllEmployees() { 
   db.connection.query("SELECT * FROM employee", function(err, res) {
@@ -9,7 +10,6 @@ function viewAllEmployees() {
   });
 };
 
-
 function viewAllDepartments() {
   db.connection.query("SELECT * FROM department", function(err, res) {
     if (err) throw err;
@@ -17,7 +17,6 @@ function viewAllDepartments() {
     cmsMain();
   });
 };
-
 
 function viewAllRoles() {
   db.connection.query("SELECT * FROM role", function(err, res) {
@@ -27,7 +26,6 @@ function viewAllRoles() {
   });
 };
 
-
 function viewDepartmentBudget() { 
   db.connection.query("SELECT name AS Department,SUM(salary) AS 'Salary Cost' FROM role r INNER JOIN department d ON d.id = r.department_id GROUP BY d.name", function(err, res) {
     if (err) throw err;
@@ -35,7 +33,6 @@ function viewDepartmentBudget() {
     cmsMain();
   });
 };
-
 
 function viewEmployeeByManager() { 
   db.connection.query("SELECT * FROM employee GROUP BY manager_id", function(err, res) {
@@ -45,28 +42,28 @@ function viewEmployeeByManager() {
   });
 };
 
-
 function addNewEmployee() {
   inquirer.prompt([
     {
-      type: "input",
       name: "firstName",
       message: "What is the first name of the new employee?",
+      type: "input"
+      
     },
     {
-      type: "input",
       name: "lastName",
       message: "What is the last name of the new employee?",
+      type: "input"
     },
     {
-      type: "input",
       name: "role",
       message: "What is the role the new employee? (enter ID number)",
+      type: "input"
     },
     {
-      type: "input",
       name: "manager",
       message: "Who will the new hire report to? (enter ID number)?",
+      type: "input"
     },
   ])
   .then(function (res) {
@@ -84,17 +81,16 @@ function addNewEmployee() {
   });
 };
 
-
 function addNewDepartment() {
   inquirer.prompt([
     {
-      type: "input",
       name: "name",
       message: "What would you like to call this new department?",
+      type: "input"
     },
   ])
   .then(function (res) {
-    db.connection.query("INSERT INTO department SET ?",
+    db.connection.query("Insert into department set ?",
     {
       name: res.name
     },
@@ -105,27 +101,26 @@ function addNewDepartment() {
   });
 };
 
-
 function addNewRole() {
   inquirer.prompt([
     {
-      type: "input",
       name: "name",
       message: "What is the name of this new role?",
+      type: "input"
     },
     {
-      type: "input",
       name: "salary",
       message: "How much does this new role pay? (numbers only)",
+      type: "input"
     },
     {
-      type: "input",
       name: "department",
-      message: "What department will this role be in? (enter the ID number)", 
+      message: "What department will this role be in? (enter the ID number)",
+      type: "input" 
     },
   ])
   .then(function (res) {
-    db.connection.query("INSERT INTO role SET ?",
+    db.connection.query("Insert into role set ?",
     {
       title: res.name,
       salary: res.salary,
@@ -138,18 +133,17 @@ function addNewRole() {
   });
 };
 
-
 function updateEmployeeRole() {
   inquirer.prompt([
     {
-      type: "input",
       name: "employee",
       message: "What employee would you like to update? (Enter Emp ID number)",
+      type: "input",
     },
     {
-      type: "input",
       name: "role",
       message: "What role would you like this employee to have? (Enter Role ID number)",
+      type: "input"
     },
   ])
   .then(function (res) {
@@ -165,14 +159,14 @@ function updateEmployeeRole() {
 function updateEmployeeMgr() {
   inquirer.prompt([
     {
-      type: "input",
       name: "employee",
       message: "What employee would you like to update? (Enter Emp ID number)",
+      type: "input"
     },
     {
-      type: "input",
       name: "manager",
       message: "Who should this employee report to? (Enter Manager ID number)",
+      type: "input"
     },
   ])
   .then(function (res) {
@@ -184,15 +178,12 @@ function updateEmployeeMgr() {
   });
 };
 
-
 function quitApplication() {
   db.connection.end();
   console.log("Application Terminated");
   process.exit(0);
 };
 
-
-// Inquirer
 
 function cmsMain() {
   inquirer.prompt([
